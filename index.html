@@ -3,189 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
     <meta name="author" content="Gaurab Aryal">
     <title>SecureBank</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            indigo: '#667eea',
+                            purple: '#764ba2',
+                            blue: '#2563eb',
+                            'blue-dark': '#1e40af',
+                            amber: '#fbbf24',
+                            'amber-dark': '#f59e0b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2563eb;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+        .hero-card {
+            transform: perspective(1000px) rotateY(-15deg) rotateX(10deg);
+            transition: transform 0.3s ease;
+        }
+        .hero-card:hover {
+            transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+        @media (max-width: 968px) {
+            .hero-card { transform: perspective(1000px) rotateY(0deg) rotateX(0deg); }
+            .hero-card:hover { transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05); }
+        }
+    </style>
+  <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
 </head>
-<body>
-  
-    <nav class="navbar">
-         <div class="nav-container">
-             <div class="nav-brand">
-                <i class="fas fa-university"></i>
+<body class="font-sans text-gray-800 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full h-20 bg-white/95 shadow-md z-[1000]">
+        <div class="max-w-6xl w-full mx-auto px-8 flex justify-between items-center h-[70px]">
+            <div class="text-2xl font-bold text-brand-blue flex items-center">
+                <i class="fas fa-university text-brand-blue mr-2 text-3xl"></i>
                 <span>SecureBank</span>
-                </div>
-            <div class="nav-menu" id="navilnks">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#features" class="nav-link">Features</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <div class="hamburger">
-                <span> </span>
-                <span> </span>
-                <span> </span>
+            <div class="nav-menu hidden md:flex items-center gap-8 absolute md:static left-0 top-[70px] w-full md:w-auto bg-white md:bg-transparent shadow-lg md:shadow-none flex-col md:flex-row py-8 md:py-0 text-center md:text-left" id="navilnks">
+                <a href="#home" class="nav-link text-slate-500 font-medium transition-colors duration-300 hover:text-brand-blue-dark relative block md:inline">Home</a>
+                <a href="#features" class="nav-link text-slate-500 font-medium transition-colors duration-300 hover:text-brand-blue-dark relative block md:inline">Features</a>
+                <a href="#about" class="nav-link text-slate-500 font-medium transition-colors duration-300 hover:text-brand-blue-dark relative block md:inline">About</a>
+                <a href="#contact" class="nav-link text-slate-500 font-medium transition-colors duration-300 hover:text-brand-blue-dark relative block md:inline">Contact</a>
             </div>
-         </div>
+            <div class="hamburger hidden md:hidden flex-col cursor-pointer gap-1.5" id="hamburgerBtn">
+                <span class="block w-6 h-0.5 bg-brand-blue-dark rounded transition-all duration-300"></span>
+                <span class="block w-6 h-0.5 bg-brand-blue-dark rounded transition-all duration-300"></span>
+                <span class="block w-6 h-0.5 bg-brand-blue-dark rounded transition-all duration-300"></span>
+            </div>
+        </div>
     </nav>
 
-
-     <section id="home" class="hero-section">
-        <div class="hero-container">
-            <div class="hero-content">
-              <h1 class="hero-title">
-                    Your Future Starts with 
+    <!-- Hero Section -->
+    <section id="home" class="h-screen flex items-center overflow-hidden relative" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="max-w-6xl w-full mx-auto px-8 flex items-center gap-8 relative z-10 flex-col md:flex-row">
+            <div class="text-white max-w-xl text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                    Your Future Starts with
                     <span class="gradient-text">Smart Banking</span>
                 </h1>
-                 <p class="hero-description">
-                    Experience next-generation banking with advanced security, 
+                <p class="text-lg md:text-xl leading-relaxed text-white/90 mb-8">
+                    Experience next-generation banking with advanced security,
                     instant transfers, and personalized financial insights.
                 </p>
-                <div class="hero-button">
-                    <a href="pages/login.html" class="btn btn-primary">
-                         <i class="fas fa-sign-in-alt"></i>
+                <div class="flex gap-4 flex-wrap justify-center md:justify-start">
+                    <a href="pages/login.html" class="btn-primary inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-400/40" style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1f2937;">
+                        <i class="fas fa-sign-in-alt"></i>
                         Get Started
                     </a>
-                    <a href="#features" class="btn btn-secondary">
-                         <i class="fas fa-info-circle"></i>
+                    <a href="#features" class="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white/20 text-white border-2 border-white/30 hover:bg-white/30 hover:border-white/60">
+                        <i class="fas fa-info-circle"></i>
                         Learn More
                     </a>
                 </div>
             </div>
-         <div class="hero-image">
-                <div class="hero-card">
-                    <div class="card-header">
-                        <div class="card-chip"></div>
-                        <i class="fab fa-cc-visa"></i>
+            <div class="flex justify-center items-center mt-8 md:mt-0">
+                <div class="hero-card w-[350px] h-[220px] rounded-2xl p-8 text-white relative shadow-2xl" style="background: linear-gradient(135deg, #1f2937, #374151);">
+                    <div class="flex justify-between items-center">
+                        <div class="w-10 h-8 rounded-md" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);"></div>
+                        <i class="fab fa-cc-visa text-3xl"></i>
                     </div>
-                    <div class="card-number">**** **** **** 1234</div>
-                    <div class="card-info">
-                        <div class="card-holder">Fang Yuan</div>
-                        <div class="card-expiry">12/25</div>
+                    <div class="text-lg font-bold text-white tracking-widest mt-10 text-center">**** **** **** 1234</div>
+                    <div class="flex justify-between items-center mt-8">
+                        <div>Fang Yuan</div>
+                        <div>12/25</div>
                     </div>
                 </div>
             </div>
-           
         </div>
     </section>
 
-     <section id="features" class="features">
-        <div class="features-container">
-            <div class="features-header">
-                <h2>Why Choose SecureBank?</h2>
-                <p>Discover the features that make banking simple, secure, and smart</p>
+    <!-- Features Section -->
+    <section id="features" class="bg-gray-200 py-16">
+        <div class="max-w-6xl w-full mx-auto px-8 text-center">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Why Choose SecureBank?</h2>
+                <p class="text-base text-gray-500 mb-12">Discover the features that make banking simple, secure, and smart</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
+            <div class="flex gap-8 justify-center flex-wrap">
+                <div class="w-[300px] bg-white rounded-2xl p-8 min-h-[280px] transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2.5">
+                    <div class="flex mx-auto mb-6 rounded-2xl text-white w-[70px] h-[70px] text-3xl justify-center items-center transition-all duration-300" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Bank-Grade Security</h3>
-                    <p>Advanced encryption and multi-factor authentication keep your money safe</p>
+                    <h3 class="text-xl font-bold text-gray-800 text-center mb-4">Bank-Grade Security</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed text-center">Advanced encryption and multi-factor authentication keep your money safe</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="w-[300px] bg-white rounded-2xl p-8 min-h-[280px] transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2.5">
+                    <div class="flex mx-auto mb-6 rounded-2xl text-white w-[70px] h-[70px] text-3xl justify-center items-center transition-all duration-300" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Instant Transfers</h3>
-                    <p>Send money instantly to anyone, anywhere, anytime with zero fees</p>
+                    <h3 class="text-xl font-bold text-gray-800 text-center mb-4">Instant Transfers</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed text-center">Send money instantly to anyone, anywhere, anytime with zero fees</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="w-[300px] bg-white rounded-2xl p-8 min-h-[280px] transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2.5">
+                    <div class="flex mx-auto mb-6 rounded-2xl text-white w-[70px] h-[70px] text-3xl justify-center items-center transition-all duration-300" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Smart Analytics</h3>
-                    <p>Track your spending patterns and get personalized financial insights</p>
+                    <h3 class="text-xl font-bold text-gray-800 text-center mb-4">Smart Analytics</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed text-center">Track your spending patterns and get personalized financial insights</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="w-[300px] bg-white rounded-2xl p-8 min-h-[280px] transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2.5">
+                    <div class="flex mx-auto mb-6 rounded-2xl text-white w-[70px] h-[70px] text-3xl justify-center items-center transition-all duration-300" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>Mobile First</h3>
-                    <p>Full-featured mobile web app for banking on the go</p>
+                    <h3 class="text-xl font-bold text-gray-800 text-center mb-4">Mobile First</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed text-center">Full-featured mobile web app for banking on the go</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="w-[300px] bg-white rounded-2xl p-8 min-h-[280px] transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2.5">
+                    <div class="flex mx-auto mb-6 rounded-2xl text-white w-[70px] h-[70px] text-3xl justify-center items-center transition-all duration-300" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
                         <i class="fas fa-headset"></i>
                     </div>
-                    <h3>24/7 Support</h3>
-                    <p>Round-the-clock customer support whenever you need help</p>
+                    <h3 class="text-xl font-bold text-gray-800 text-center mb-4">24/7 Support</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed text-center">Round-the-clock customer support whenever you need help</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="w-[300px] bg-white rounded-2xl p-8 min-h-[280px] transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2.5">
+                    <div class="flex mx-auto mb-6 rounded-2xl text-white w-[70px] h-[70px] text-3xl justify-center items-center transition-all duration-300" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
                         <i class="fas fa-piggy-bank"></i>
                     </div>
-                    <h3>Smart Savings</h3>
-                    <p>Automated savings plans to help you reach your financial goals</p>
+                    <h3 class="text-xl font-bold text-gray-800 text-center mb-4">Smart Savings</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed text-center">Automated savings plans to help you reach your financial goals</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="about" class="about-section">
-            <div class="about-grid">
-                <div class="stat-item">
-                    <div class="stat-number">2M+</div>
-                    <div class="stat-label">Happy Customers</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">$50B+</div>
-                    <div class="stat-label">Transactions Processed</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">99.9%</div>
-                    <div class="stat-label">Uptime Guarantee</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">150+</div>
-                    <div class="stat-label">Countries Served</div>
-                </div>
+    <!-- About Section -->
+    <section id="about" class="text-white" style="background: linear-gradient(135deg, #1f2937, #374151);">
+        <div class="max-w-6xl w-full flex justify-center flex-wrap mx-auto p-8">
+            <div class="w-[210px] text-center m-8">
+                <div class="text-5xl font-bold text-amber-500 ml-5">2M+</div>
+                <div class="text-base font-medium ml-5">Happy Customers</div>
             </div>
+            <div class="w-[210px] text-center m-8">
+                <div class="text-5xl font-bold text-amber-500 ml-5">$50B+</div>
+                <div class="text-base font-medium ml-5">Transactions Processed</div>
+            </div>
+            <div class="w-[210px] text-center m-8">
+                <div class="text-5xl font-bold text-amber-500 ml-5">99.9%</div>
+                <div class="text-base font-medium ml-5">Uptime Guarantee</div>
+            </div>
+            <div class="w-[210px] text-center m-8">
+                <div class="text-5xl font-bold text-amber-500 ml-5">150+</div>
+                <div class="text-base font-medium ml-5">Countries Served</div>
+            </div>
+        </div>
     </section>
 
-    <footer class="footer" id="contact">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-bank">
-                    <i class="fas fa-university"></i>
-                    <span>SecureBank</span>
-<p>Your trusted partner for secure and innovative banking solutions.</p>                </div>
-                <div class="footer-services">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#">Online Banking</a></li>
-                        <li><a href="#">Mobile Banking</a></li>
-                        <li><a href="#">Loans</a></li>
-                        <li><a href="#">Investments</a></li>
+    <!-- Footer -->
+    <footer class="bg-gray-800" id="contact">
+        <div class="max-w-6xl w-full mx-auto px-8">
+            <div class="w-full gap-12 pt-12 pb-8 grid grid-cols-1 md:grid-cols-4 items-start" style="grid-template-columns: 1.5fr 1fr 1fr 1fr;">
+                <div class="flex flex-col items-start">
+                    <i class="fas fa-university text-4xl text-blue-500 mb-2"></i>
+                    <span class="text-blue-500 font-bold text-2xl mb-4">SecureBank</span>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-[280px]">Your trusted partner for secure and innovative banking solutions.</p>
+                </div>
+                <div class="flex flex-col">
+                    <h4 class="text-lg font-semibold text-amber-500 mb-5">Services</h4>
+                    <ul class="list-none p-0 m-0">
+                        <li class="mb-3"><a href="#" class="text-gray-400 no-underline text-sm transition-colors duration-300 hover:text-white">Online Banking</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 no-underline text-sm transition-colors duration-300 hover:text-white">Mobile Banking</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 no-underline text-sm transition-colors duration-300 hover:text-white">Loans</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 no-underline text-sm transition-colors duration-300 hover:text-white">Investments</a></li>
                     </ul>
                 </div>
-                <div class="footer-support">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                <div class="flex flex-col">
+                    <h4 class="text-lg font-semibold text-amber-500 mb-5">Support</h4>
+                    <ul class="list-none p-0 m-0">
+                        <li class="mb-3"><a href="#" class="text-gray-400 no-underline text-sm transition-colors duration-300 hover:text-white">Help Center</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 no-underline text-sm transition-colors duration-300 hover:text-white">Contact Us</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 no-underline text-sm transition-colors duration-300 hover:text-white">Privacy Policy</a></li>
+                        <li class="mb-3"><a href="#" class="text-gray-400 no-underline text-sm transition-colors duration-300 hover:text-white">Terms of Service</a></li>
                     </ul>
                 </div>
-                <div class="footer-contact">
-                    <h4>Contact Us</h4>
-                    <div class="footer-items">
-                         <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                <div class="flex flex-col">
+                    <h4 class="text-lg font-semibold text-amber-500 mb-5">Contact Us</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 no-underline">
+                            <i class="fab fa-facebook text-lg text-gray-400 transition-colors duration-300"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 no-underline">
+                            <i class="fab fa-twitter text-lg text-gray-400 transition-colors duration-300"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 no-underline">
+                            <i class="fab fa-linkedin text-lg text-gray-400 transition-colors duration-300"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 hover:bg-white/20 hover:-translate-y-1 no-underline">
+                            <i class="fab fa-instagram text-lg text-gray-400 transition-colors duration-300"></i>
+                        </a>
                     </div>
-            </div>
+                </div>
             </div>
         </div>
-        <div class="footer-line"></div>
-        <div class="footer-bottom">
-                <p>&copy; 2024 SecureBank. All rights reserved.</p>
-            </div>
+        <div class="border-t border-white/10 mx-8"></div>
+        <div class="text-center p-8 text-gray-400">
+            <p>&copy; 2024 SecureBank. All rights reserved.</p>
+        </div>
     </footer>
+
 <script src="js/main.js"></script>
 </body>
 </html>

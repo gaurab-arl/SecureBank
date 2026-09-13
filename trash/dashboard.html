@@ -5,212 +5,242 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SecureBank</title>
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../css/dashboard.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-switch .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px; }
+        .toggle-switch .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%; }
+        .toggle-switch input:checked + .slider { background-color: #2563eb; }
+        .toggle-switch input:checked + .slider:before { transform: translateX(26px); }
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0 !important; }
+            .menu-toggle { display: block !important; }
+        }
+        @media (max-width: 768px) {
+            .user-info { display: none; }
+        }
+    </style>
 </head>
-<body>
+<body class="font-sans bg-slate-50 text-gray-800 m-0 p-0 box-border">
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="brand">
-                <i class="fas fa-university"></i>
+    <div class="sidebar fixed left-0 top-0 w-[280px] h-screen text-white z-[1000] transition-transform duration-300 overflow-y-auto" style="background: linear-gradient(180deg, #1f2937 0%, #374151 100%);">
+        <div class="p-8 border-b border-white/10">
+            <div class="flex items-center text-2xl font-bold text-amber-400">
+                <i class="fas fa-university mr-2 text-3xl"></i>
                 <span>SecureBank</span>
             </div>
         </div>
-        
-        <nav class="sidebar-nav">
-            <a href="#" class="nav-item active" data-section="overview">
-                <i class="fas fa-tachometer-alt"></i>
+
+        <nav class="py-4">
+            <a href="#" class="nav-item active flex items-center px-8 py-4 text-white/70 no-underline transition-all duration-300 border-l-[3px] border-transparent hover:bg-white/10 hover:text-white hover:border-amber-400" data-section="overview" style="background: rgba(251, 191, 36, 0.1); color: #fbbf24; border-left-color: #fbbf24;">
+                <i class="fas fa-tachometer-alt mr-4 text-xl w-5"></i>
                 <span>Overview</span>
             </a>
-            <a href="#" class="nav-item" data-section="accounts">
-                <i class="fas fa-wallet"></i>
+            <a href="#" class="nav-item flex items-center px-8 py-4 text-white/70 no-underline transition-all duration-300 border-l-[3px] border-transparent hover:bg-white/10 hover:text-white hover:border-amber-400" data-section="accounts">
+                <i class="fas fa-wallet mr-4 text-xl w-5"></i>
                 <span>Accounts</span>
             </a>
-            <a href="#" class="nav-item" data-section="transactions">
-                <i class="fas fa-exchange-alt"></i>
+            <a href="#" class="nav-item flex items-center px-8 py-4 text-white/70 no-underline transition-all duration-300 border-l-[3px] border-transparent hover:bg-white/10 hover:text-white hover:border-amber-400" data-section="transactions">
+                <i class="fas fa-exchange-alt mr-4 text-xl w-5"></i>
                 <span>Transactions</span>
             </a>
-            <a href="#" class="nav-item" data-section="transfer">
-                <i class="fas fa-paper-plane"></i>
+            <a href="#" class="nav-item flex items-center px-8 py-4 text-white/70 no-underline transition-all duration-300 border-l-[3px] border-transparent hover:bg-white/10 hover:text-white hover:border-amber-400" data-section="transfer">
+                <i class="fas fa-paper-plane mr-4 text-xl w-5"></i>
                 <span>Transfer</span>
             </a>
-            <a href="#" class="nav-item" data-section="cards">
-                <i class="fas fa-credit-card"></i>
+            <a href="#" class="nav-item flex items-center px-8 py-4 text-white/70 no-underline transition-all duration-300 border-l-[3px] border-transparent hover:bg-white/10 hover:text-white hover:border-amber-400" data-section="cards">
+                <i class="fas fa-credit-card mr-4 text-xl w-5"></i>
                 <span>Cards</span>
             </a>
-            <a href="#" class="nav-item" data-section="settings">
-                <i class="fas fa-cog"></i>
+            <a href="#" class="nav-item flex items-center px-8 py-4 text-white/70 no-underline transition-all duration-300 border-l-[3px] border-transparent hover:bg-white/10 hover:text-white hover:border-amber-400" data-section="settings">
+                <i class="fas fa-cog mr-4 text-xl w-5"></i>
                 <span>Settings</span>
             </a>
         </nav>
-        
-        <div class="sidebar-footer">
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
+
+        <div class="absolute bottom-0 left-0 right-0 p-8">
+            <button class="logout-btn flex items-center w-full p-4 bg-red-500/10 text-red-500 border border-red-500/20 rounded-xl cursor-pointer transition-all duration-300 hover:bg-red-500/20" onclick="logout()">
+                <i class="fas fa-sign-out-alt mr-2"></i>
                 <span>Logout</span>
             </button>
         </div>
     </div>
-    
+
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content ml-[280px] min-h-screen transition-all duration-300">
         <!-- Header -->
-        <header class="dashboard-header">
-            <div class="header-left">
-                <button class="menu-toggle">
+        <header class="bg-white p-6 px-8 border-b border-gray-200 flex justify-between items-center sticky top-0 z-[100]">
+            <div class="flex items-center gap-4">
+                <button class="menu-toggle hidden bg-transparent border-none text-2xl cursor-pointer text-gray-700" onclick="document.querySelector('.sidebar').classList.toggle('active')">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 id="pageTitle">Dashboard Overview</h1>
+                <h1 id="pageTitle" class="text-xl font-semibold">Dashboard Overview</h1>
             </div>
-            <div class="header-right">
-                <div class="user-profile">
-                    <img src="../images/image.png" alt="Profile" class="profile-img">
-                    <div class="user-info">
-                        <span class="user-name"><?php echo $name; ?></span>
-                        <span class="user-id">ID: <?php echo $user_id; ?></span>
+            <div class="flex items-center gap-8">
+                <div class="user-profile flex items-center gap-4">
+                    <img src="../images/image.png" alt="Profile" class="w-10 h-10 rounded-full object-cover">
+                    <div class="user-info flex flex-col">
+                        <span class="user-name font-semibold text-gray-800"><?php echo $name; ?></span>
+                        <span class="user-id text-xs text-gray-500">ID: <?php echo $user_id; ?></span>
                     </div>
                 </div>
             </div>
         </header>
-        
+
         <!-- Dashboard Content -->
-        <div class="dashboard-content">
+        <div class="p-8 min-h-[calc(100vh-82px)]">
             <!-- Overview Section -->
             <div id="overview" class="content-section active">
-                <!-- Account Summary Cards -->
-                <div class="summary-cards">
-                    <div class="summary-card primary">
-                        <div class="card-icon">
+                <!-- Summary Cards -->
+                <div class="grid gap-6 mb-12" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <div class="summary-card bg-white p-8 rounded-2xl shadow-sm border border-gray-200 flex items-center gap-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="w-[60px] h-[60px] rounded-xl flex items-center justify-center text-2xl text-white" style="background: linear-gradient(135deg, #2563eb, #3b82f6);">
                             <i class="fas fa-wallet"></i>
                         </div>
-                        <div class="card-content">
-                            <h3>Total Balance</h3>
-                            <p class="amount">Rs<?php echo number_format($total_balance, 2); ?></p>
-                            <span class="change positive">+0% from last month</span>
+                        <div>
+                            <h3 class="text-sm text-gray-500 mb-2 font-medium">Total Balance</h3>
+                            <p class="amount text-3xl font-bold text-gray-800 mb-2">Rs<?php echo number_format($total_balance, 2); ?></p>
+                            <span class="change positive text-xs font-medium text-emerald-500">+0% from last month</span>
                         </div>
                     </div>
-                    
-                    <div class="summary-card success">
-                        <div class="card-icon">
+
+                    <div class="summary-card bg-white p-8 rounded-2xl shadow-sm border border-gray-200 flex items-center gap-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="w-[60px] h-[60px] rounded-xl flex items-center justify-center text-2xl text-white" style="background: linear-gradient(135deg, #10b981, #34d399);">
                             <i class="fas fa-arrow-down"></i>
                         </div>
-                        <div class="card-content">
-                            <h3>Income</h3>
-                            <p class="amount">Rs<?php echo number_format($income, 2); ?></p>
-                            <span class="change positive">+0% from last month</span>
+                        <div>
+                            <h3 class="text-sm text-gray-500 mb-2 font-medium">Income</h3>
+                            <p class="amount text-3xl font-bold text-gray-800 mb-2">Rs<?php echo number_format($income, 2); ?></p>
+                            <span class="change positive text-xs font-medium text-emerald-500">+0% from last month</span>
                         </div>
                     </div>
-                    
-                    <div class="summary-card warning">
-                        <div class="card-icon">
+
+                    <div class="summary-card bg-white p-8 rounded-2xl shadow-sm border border-gray-200 flex items-center gap-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="w-[60px] h-[60px] rounded-xl flex items-center justify-center text-2xl text-white" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
                             <i class="fas fa-arrow-up"></i>
                         </div>
-                        <div class="card-content">
-                            <h3>Expenses</h3>
-                            <p class="amount">Rs<?php echo number_format($expenses, 2); ?></p>
-                            <span class="change negative">+0% from last month</span>
+                        <div>
+                            <h3 class="text-sm text-gray-500 mb-2 font-medium">Expenses</h3>
+                            <p class="amount text-3xl font-bold text-gray-800 mb-2">Rs<?php echo number_format($expenses, 2); ?></p>
+                            <span class="change negative text-xs font-medium text-red-500">+0% from last month</span>
                         </div>
                     </div>
-                    
-                    <div class="summary-card info">
-                        <div class="card-icon">
+
+                    <div class="summary-card bg-white p-8 rounded-2xl shadow-sm border border-gray-200 flex items-center gap-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        <div class="w-[60px] h-[60px] rounded-xl flex items-center justify-center text-2xl text-white" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
                             <i class="fas fa-piggy-bank"></i>
                         </div>
-                        <div class="card-content">
-                            <h3>Savings</h3>
-                            <p class="amount">Rs<?php echo number_format($savings, 2); ?></p>
-                            <span class="change positive">+0% from last month</span>
+                        <div>
+                            <h3 class="text-sm text-gray-500 mb-2 font-medium">Savings</h3>
+                            <p class="amount text-3xl font-bold text-gray-800 mb-2">Rs<?php echo number_format($savings, 2); ?></p>
+                            <span class="change positive text-xs font-medium text-emerald-500">+0% from last month</span>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Quick Actions -->
-                <div class="quick-actions">
-                    <h2>Quick Actions</h2>
-                    <div class="action-buttons">
-                        <button class="action-btn" onclick="showSection('transfer')">
-                            <i class="fas fa-paper-plane"></i>
+                <div class="mb-12">
+                    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Quick Actions</h2>
+                    <div class="grid gap-4" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                        <button class="action-btn flex flex-col items-center gap-2 p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-slate-50 hover:border-blue-600 hover:-translate-y-0.5 text-gray-700" onclick="showSection('transfer')">
+                            <i class="fas fa-paper-plane text-2xl text-blue-600"></i>
                             <span>Send Money</span>
                         </button>
-                        <button class="action-btn" onclick="showSection('transactions')">
-                            <i class="fas fa-history"></i>
+                        <button class="action-btn flex flex-col items-center gap-2 p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-slate-50 hover:border-blue-600 hover:-translate-y-0.5 text-gray-700" onclick="showSection('transactions')">
+                            <i class="fas fa-history text-2xl text-blue-600"></i>
                             <span>View History</span>
                         </button>
-                        <button class="action-btn" onclick="showSection('cards')">
-                            <i class="fas fa-credit-card"></i>
+                        <button class="action-btn flex flex-col items-center gap-2 p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-slate-50 hover:border-blue-600 hover:-translate-y-0.5 text-gray-700" onclick="showSection('cards')">
+                            <i class="fas fa-credit-card text-2xl text-blue-600"></i>
                             <span>Manage Cards</span>
                         </button>
-                        <button class="action-btn">
-                            <i class="fas fa-download"></i>
+                        <button class="action-btn flex flex-col items-center gap-2 p-6 bg-white border border-gray-200 rounded-xl cursor-pointer transition-all duration-300 hover:bg-slate-50 hover:border-blue-600 hover:-translate-y-0.5 text-gray-700">
+                            <i class="fas fa-download text-2xl text-blue-600"></i>
                             <span>Download Statement</span>
                         </button>
                     </div>
                 </div>
-                
+
                 <!-- Recent Transactions -->
-                <div class="recent-transactions">
-                    <div class="section-header">
-                        <h2>Recent Transactions</h2>
-                        <button class="view-all-btn" onclick="showSection('transactions')">View All</button>
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
+                    <div class="section-header flex justify-between items-center mb-8">
+                        <h2 class="text-2xl font-semibold text-gray-800">Recent Transactions</h2>
+                        <button class="view-all-btn bg-transparent border-none text-blue-600 font-medium cursor-pointer px-4 py-2 rounded-lg transition-all duration-300 hover:bg-blue-600/10" onclick="showSection('transactions')">View All</button>
                     </div>
-                    <div class="transactions-list" id="recentTransactionsList">
-                        <!-- Transactions will be loaded here -->
+                    <div class="transactions-list flex flex-col gap-4" id="recentTransactionsList">
                     </div>
                 </div>
             </div>
-            
+
             <!-- Accounts Section -->
             <div id="accounts" class="content-section">
-                <div class="section-header">
-                    <h2>My Accounts</h2>
+                <div class="section-header flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-semibold text-gray-800">My Accounts</h2>
                 </div>
-                
-                <div class="accounts-grid">
-                    <div class="account-card checking">
-                        <div class="account-header">
-                            <div class="account-type">
+
+                <div class="grid gap-8" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                    <div class="account-card checking bg-white rounded-2xl p-8 shadow-sm border border-gray-200 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 right-0 h-1" style="background: linear-gradient(135deg, #2563eb, #3b82f6);"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="flex items-center gap-2 font-semibold text-gray-800">
                                 <i class="fas fa-university"></i>
                                 <span>Checking Account</span>
                             </div>
-                            <div class="account-number">****1234</div>
+                            <div class="text-sm text-gray-500">****1234</div>
                         </div>
-                        <div class="account-balance">
-                            <span class="balance-label">Total Balance</span>
-                            <span class="balance-amount">Rs <?php echo number_format($total_balance, 2); ?></span>
+                        <div class="mb-6">
+                            <span class="block text-xs text-gray-500 mb-2">Total Balance</span>
+                            <span class="text-3xl font-bold text-gray-800">Rs <?php echo number_format($total_balance, 2); ?></span>
                         </div>
-                        <div class="account-actions">
-                            <button class="btn btn-sm" onclick="showSection('transfer')">Transfer</button>
-                            <button class="btn btn-sm btn-outline">Details</button>
+                        <div class="flex gap-4">
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2 border-none rounded-lg font-medium cursor-pointer transition-all duration-300 text-sm bg-gradient-to-br from-blue-600 to-blue-500 text-white hover:-translate-y-0.5 hover:shadow-lg" onclick="showSection('transfer')">Transfer</button>
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium cursor-pointer transition-all duration-300 text-sm bg-transparent text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white">Details</button>
                         </div>
                     </div>
-                    
-                    <div class="account-card savings">
-                        <div class="account-header">
-                            <div class="account-type">
+
+                    <div class="account-card savings bg-white rounded-2xl p-8 shadow-sm border border-gray-200 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 right-0 h-1" style="background: linear-gradient(135deg, #10b981, #34d399);"></div>
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="flex items-center gap-2 font-semibold text-gray-800">
                                 <i class="fas fa-piggy-bank"></i>
                                 <span>Savings Account</span>
                             </div>
-                            <div class="account-number">****5678</div>
+                            <div class="text-sm text-gray-500">****5678</div>
                         </div>
-                        <div class="account-balance">
-                            <span class="balance-label">Available Balance</span>
-                            <span class="balance-amount">Rs <?php echo number_format($savings, 2); ?></span>
+                        <div class="mb-6">
+                            <span class="block text-xs text-gray-500 mb-2">Available Balance</span>
+                            <span class="text-3xl font-bold text-gray-800">Rs <?php echo number_format($savings, 2); ?></span>
                         </div>
-                        <div class="account-actions">
-                            <button class="btn btn-sm" onclick="showSection('transfer')">Transfer</button>
-                            <button class="btn btn-sm btn-outline">Details</button>
+                        <div class="flex gap-4">
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2 border-none rounded-lg font-medium cursor-pointer transition-all duration-300 text-sm bg-gradient-to-br from-blue-600 to-blue-500 text-white hover:-translate-y-0.5 hover:shadow-lg" onclick="showSection('transfer')">Transfer</button>
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium cursor-pointer transition-all duration-300 text-sm bg-transparent text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white">Details</button>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Transactions Section -->
             <div id="transactions" class="content-section">
-                <div class="section-header">
-                    <h2>Transaction History</h2>
-                    <div class="filters">
-                        <select class="filter-select">
+                <div class="section-header flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-semibold text-gray-800">Transaction History</h2>
+                    <div class="filters flex gap-4 items-center">
+                        <select class="filter-select px-2 py-2 border border-gray-300 rounded-lg text-sm">
                             <option>All Transactions</option>
                             <option>Income</option>
                             <option>Expenses</option>
@@ -218,71 +248,70 @@
                         </select>
                     </div>
                 </div>
-                
-                <div class="transactions-table">
-                    <div class="table-header">
-                        <div class="table-row">
-                            <div class="table-cell">Date</div>
-                            <div class="table-cell">Description</div>
-                            <div class="table-cell">Category</div>
-                            <div class="table-cell">Amount</div>
-                            <div class="table-cell">Status</div>
+
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200">
+                    <div class="bg-slate-50 border-b border-gray-200">
+                        <div class="table-row grid gap-4 px-8 py-4 items-center font-semibold text-gray-700" style="grid-template-columns: 1fr 2fr 1fr 1fr 1fr;">
+                            <div>Date</div>
+                            <div>Description</div>
+                            <div>Category</div>
+                            <div>Amount</div>
+                            <div>Status</div>
                         </div>
                     </div>
-                    <div class="table-body" id="transactionsTableBody">
-                        <!-- Transactions will be loaded here -->
+                    <div id="transactionsTableBody">
                     </div>
                 </div>
             </div>
-            
+
             <!-- Transfer Section -->
             <div id="transfer" class="content-section">
-                <div class="transfer-container">
-                    <div class="transfer-form-card">
-                        <h2>Send Money</h2>
+                <div class="max-w-[600px] mx-auto">
+                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-8 text-center">Send Money</h2>
                         <form id="transferForm" name="transfer_form" method="POST" action="../php/dashboard.php">
-                            <div class="form-group">
-                                <label>From Account</label>
-                                <select class="form-control" name="from_account" id="fromAccount" required>
+                            <div class="mb-6">
+                                <label class="block mb-2 font-medium text-gray-700">From Account</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg text-base transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100" name="from_account" id="fromAccount" required>
                                     <option value="Checking Account">Checking Account (****1234) - Rs <?php echo number_format($total_balance, 2); ?></option>
                                     <option value="Savings Account">Savings Account (****5678) - Rs <?php echo number_format($savings, 2); ?></option>
                                 </select>
                             </div>
-                            
-                            <div class="form-group">
-                                <label>To Account/Email</label>
-                                <input type="text" class="form-control" id="toAccount" placeholder="Enter account number or email" name="transfer_email" required>
+
+                            <div class="mb-6">
+                                <label class="block mb-2 font-medium text-gray-700">To Account/Email</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg text-base transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100" id="toAccount" placeholder="Enter account number or email" name="transfer_email" required>
                             </div>
-                            
-                            <div class="form-group">
-                                <label>Amount</label>
-                                <div class="amount-input">
-                                    <span class="currency">Rs</span>
-                                    <input type="number" class="form-control" id="transferAmount" placeholder="0.00" step="0.01" min="0.01" name="transfer_amount" required>
+
+                            <div class="mb-6">
+                                <label class="block mb-2 font-medium text-gray-700">Amount</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-medium">Rs</span>
+                                    <input type="number" class="w-full p-3 pl-8 border border-gray-300 rounded-lg text-base transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100" id="transferAmount" placeholder="0.00" step="0.01" min="0.01" name="transfer_amount" required>
                                 </div>
                             </div>
-                            
-                            <div class="form-group">
-                                <label>Description (Optional)</label>
-                                <input type="text" class="form-control" id="transferDescription" placeholder="What's this for?" name="transfer_description">
+
+                            <div class="mb-6">
+                                <label class="block mb-2 font-medium text-gray-700">Description (Optional)</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg text-base transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100" id="transferDescription" placeholder="What's this for?" name="transfer_description">
                             </div>
-                            
-                            <div class="transfer-summary">
-                                <div class="summary-row">
+
+                            <div class="bg-slate-50 rounded-xl p-6 my-8">
+                                <div class="flex justify-between items-center mb-2">
                                     <span>Transfer Amount:</span>
                                     <span id="summaryAmount">Rs0.00</span>
                                 </div>
-                                <div class="summary-row">
+                                <div class="flex justify-between items-center mb-2">
                                     <span>Transfer Fee:</span>
                                     <span>Rs0.00</span>
                                 </div>
-                                <div class="summary-row total">
+                                <div class="flex justify-between items-center border-t border-gray-200 pt-2 mt-4 font-semibold text-lg">
                                     <span>Total:</span>
                                     <span id="summaryTotal">Rs0.00</span>
                                 </div>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary btn-full" name="transfer">
+
+                            <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 border-none rounded-lg font-medium cursor-pointer transition-all duration-300 text-sm bg-gradient-to-br from-blue-600 to-blue-500 text-white hover:-translate-y-0.5 hover:shadow-lg" name="transfer">
                                 <i class="fas fa-paper-plane"></i>
                                 Send Money
                             </button>
@@ -290,113 +319,113 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Cards Section -->
             <div id="cards" class="content-section">
-                <div class="section-header">
-                    <h2>My Cards</h2>
+                <div class="section-header flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-semibold text-gray-800">My Cards</h2>
                 </div>
-                
-                <div class="cards-grid">
-                    <div class="credit-card primary">
-                        <div class="card-header">
-                            <div class="card-type">Debit Card</div>
-                            <i class="fab fa-cc-visa"></i>
+
+                <div class="grid gap-8" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                    <div class="credit-card primary w-full h-[220px] rounded-2xl p-8 text-white relative mb-4" style="background: linear-gradient(135deg, #2563eb, #3b82f6);">
+                        <div class="flex justify-between items-center mb-8">
+                            <div class="text-sm opacity-80">Debit Card</div>
+                            <i class="fab fa-cc-visa text-3xl"></i>
                         </div>
-                        <div class="card-chip"></div>
-                        <div class="card-number">**** **** **** 1234</div>
-                        <div class="card-footer">
-                            <div class="card-holder"><?php echo strtoupper($name); ?></div>
-                            <div class="card-expiry">12/25</div>
+                        <div class="w-10 h-8 rounded-md mb-8" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);"></div>
+                        <div class="text-2xl font-semibold tracking-wider mb-6">**** **** **** 1234</div>
+                        <div class="flex justify-between items-center">
+                            <div class="text-sm opacity-80"><?php echo strtoupper($name); ?></div>
+                            <div class="text-sm opacity-80">12/25</div>
                         </div>
-                        <div class="card-actions">
-                            <button class="btn btn-sm">Block Card</button>
-                            <button class="btn btn-sm btn-outline">Settings</button>
+                        <div class="flex gap-4 mt-4">
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2 border-none rounded-lg font-medium cursor-pointer transition-all duration-300 text-xs text-white border border-white/30 bg-transparent hover:bg-white/10">Block Card</button>
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium cursor-pointer transition-all duration-300 text-xs text-white border border-white/30 bg-transparent hover:bg-white/10">Settings</button>
                         </div>
                     </div>
-                    
-                    <div class="credit-card secondary">
-                        <div class="card-header">
-                            <div class="card-type">Credit Card</div>
-                            <i class="fab fa-cc-mastercard"></i>
+
+                    <div class="credit-card secondary w-full h-[220px] rounded-2xl p-8 text-white relative mb-4" style="background: linear-gradient(135deg, #7c3aed, #8b5cf6);">
+                        <div class="flex justify-between items-center mb-8">
+                            <div class="text-sm opacity-80">Credit Card</div>
+                            <i class="fab fa-cc-mastercard text-3xl"></i>
                         </div>
-                        <div class="card-chip"></div>
-                        <div class="card-number">**** **** **** 5678</div>
-                        <div class="card-footer">
-                            <div class="card-holder"><?php echo strtoupper($name); ?></div>
-                            <div class="card-expiry">08/26</div>
+                        <div class="w-10 h-8 rounded-md mb-8" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);"></div>
+                        <div class="text-2xl font-semibold tracking-wider mb-6">**** **** **** 5678</div>
+                        <div class="flex justify-between items-center">
+                            <div class="text-sm opacity-80"><?php echo strtoupper($name); ?></div>
+                            <div class="text-sm opacity-80">08/26</div>
                         </div>
-                        <div class="card-actions">
-                            <button class="btn btn-sm">Block Card</button>
-                            <button class="btn btn-sm btn-outline">Settings</button>
+                        <div class="flex gap-4 mt-4">
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2 border-none rounded-lg font-medium cursor-pointer transition-all duration-300 text-xs text-white border border-white/30 bg-transparent hover:bg-white/10">Block Card</button>
+                            <button class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium cursor-pointer transition-all duration-300 text-xs text-white border border-white/30 bg-transparent hover:bg-white/10">Settings</button>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Settings Section -->
             <div id="settings" class="content-section">
-                <div class="settings-container">
-                    <div class="settings-section">
-                        <h3>Profile Information</h3>
-                        <form class="settings-form" name="setting_form" action="../php/dashboard.php" method="POST">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" name="setting_name" class="form-control" value="<?php echo $name; ?>" required>
+                <div class="max-w-[800px] mx-auto">
+                    <div class="settings-section bg-white rounded-2xl p-8 mb-8 shadow-sm border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Profile Information</h3>
+                        <form class="flex flex-col gap-4" name="setting_form" action="../php/dashboard.php" method="POST">
+                            <div class="mb-6">
+                                <label class="block mb-2 font-medium text-gray-700">Name</label>
+                                <input type="text" name="setting_name" class="w-full p-3 border border-gray-300 rounded-lg text-base transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100" value="<?php echo $name; ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" name="setting_email" class="form-control" value="<?php echo $email; ?>" required>
+                            <div class="mb-6">
+                                <label class="block mb-2 font-medium text-gray-700">Email</label>
+                                <input type="email" name="setting_email" class="w-full p-3 border border-gray-300 rounded-lg text-base transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100" value="<?php echo $email; ?>" required>
                             </div>
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input type="tel" name="setting_phone" class="form-control" placeholder="Enter phone number">
+                            <div class="mb-6">
+                                <label class="block mb-2 font-medium text-gray-700">Phone</label>
+                                <input type="tel" name="setting_phone" class="w-full p-3 border border-gray-300 rounded-lg text-base transition-all duration-300 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100" placeholder="Enter phone number">
                             </div>
-                            <button type="submit" class="btn btn-primary" name="update_profile">Update Profile</button>
+                            <button type="submit" class="inline-flex items-center justify-center gap-2 px-6 py-3 border-none rounded-lg font-medium cursor-pointer transition-all duration-300 text-sm bg-gradient-to-br from-blue-600 to-blue-500 text-white hover:-translate-y-0.5 hover:shadow-lg" name="update_profile">Update Profile</button>
                         </form>
                     </div>
-                    
-                    <div class="settings-section">
-                        <h3>Security Settings</h3>
-                        <div class="security-options">
-                            <div class="security-item">
-                                <div class="security-info">
-                                    <h4>Two-Factor Authentication</h4>
-                                    <p>Add an extra layer of security to your account</p>
+
+                    <div class="settings-section bg-white rounded-2xl p-8 mb-8 shadow-sm border border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6">Security Settings</h3>
+                        <div class="flex flex-col gap-6 mb-8">
+                            <div class="security-item flex justify-between items-center p-4 border border-gray-100 rounded-xl">
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-1">Two-Factor Authentication</h4>
+                                    <p class="text-sm text-gray-500">Add an extra layer of security to your account</p>
                                 </div>
-                                <label class="toggle-switch">
+                                <label class="toggle-switch relative inline-block w-[50px] h-6">
                                     <input type="checkbox" checked>
                                     <span class="slider"></span>
                                 </label>
                             </div>
-                            <div class="security-item">
-                                <div class="security-info">
-                                    <h4>Email Notifications</h4>
-                                    <p>Receive email alerts for transactions</p>
+                            <div class="security-item flex justify-between items-center p-4 border border-gray-100 rounded-xl">
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-1">Email Notifications</h4>
+                                    <p class="text-sm text-gray-500">Receive email alerts for transactions</p>
                                 </div>
-                                <label class="toggle-switch">
+                                <label class="toggle-switch relative inline-block w-[50px] h-6">
                                     <input type="checkbox" checked>
                                     <span class="slider"></span>
                                 </label>
                             </div>
-                            <div class="security-item">
-                                <div class="security-info">
-                                    <h4>SMS Notifications</h4>
-                                    <p>Receive SMS alerts for large transactions</p>
+                            <div class="security-item flex justify-between items-center p-4 border border-gray-100 rounded-xl">
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-1">SMS Notifications</h4>
+                                    <p class="text-sm text-gray-500">Receive SMS alerts for large transactions</p>
                                 </div>
-                                <label class="toggle-switch">
+                                <label class="toggle-switch relative inline-block w-[50px] h-6">
                                     <input type="checkbox">
                                     <span class="slider"></span>
                                 </label>
                             </div>
                         </div>
-                        <button class="btn btn-outline">Change Password</button>
+                        <button class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium cursor-pointer transition-all duration-300 text-sm bg-transparent text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white">Change Password</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script type="module" src="../js/dashboard.js"></script>
 </body>
 </html>

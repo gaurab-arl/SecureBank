@@ -5,14 +5,16 @@ const navMenu = document.querySelector('.nav-menu');
 if (hamburger && navMenu) {
     // Toggle menu open/close
     hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
+        navMenu.classList.toggle('flex');
+        navMenu.classList.toggle('hidden');
         hamburger.classList.toggle('active');
     });
 
     // Close menu on link click
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
+            navMenu.classList.remove('flex');
+            navMenu.classList.add('hidden');
             hamburger.classList.remove('active');
         });
     });

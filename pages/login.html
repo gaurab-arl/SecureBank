@@ -4,72 +4,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/login.css">
     <meta name="author" content="Gaurab Aryal">
     <title>SecureBank</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            indigo: '#667eea',
+                            purple: '#764ba2',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body>
+<body class="font-sans m-0 p-0 h-[90%]">
 
-    <div class="login-container">
-        <div class="login-grid">
-            <div class="login-image">
-                <img src="../images/login-page.png" alt="Login Image" class="image">
+    <div class="flex justify-center items-center relative mx-auto" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="m-12 w-4/5 bg-white p-8 rounded-xl shadow-2xl flex flex-row">
+            <!-- Image -->
+            <div class="w-1/2 flex justify-center items-center p-4 box-border">
+                <img src="../images/login-page.png" alt="Login Image" class="w-full h-auto object-contain rounded-xl">
             </div>
-            <div class="login-border">
-                <div class="login-border-inner"></div>
+            <!-- Divider -->
+            <div class="flex justify-center items-center self-stretch w-1.5 p-4 ml-12">
+                <div class="w-[3px] h-full bg-gray-400 rounded-md"></div>
             </div>
-            <div class="login-content">
-                <div class="login-header">
-                    <div class="login-brand">
-                        <i class="fas fa-university"></i>
-                        <h1> SecureBank</h1>
+            <!-- Content -->
+            <div class="w-1/2 flex flex-col justify-center items-center">
+                <div class="text-center text-brand-indigo">
+                    <div class="flex flex-row font-bold text-2xl items-center text-brand-indigo justify-center">
+                        <i class="fas fa-university text-brand-indigo text-4xl"></i>
+                        <h1 class="ml-2 text-brand-indigo">SecureBank</h1>
                     </div>
-                    <h2>Welcome Back</h2>
-                    <p>Sign in to your account to continue</p>
+                    <h2 class="m-0 text-3xl text-black mt-4">Welcome Back</h2>
+                    <p class="text-base text-gray-600 mt-2">Sign in to your account to continue</p>
                 </div>
-                <form class="login-form" id="login-form" action="../php/auth.php" method="POST" name="login-form">
-                    <div class="login-group">
-                        <label for="email">Email Address</label>
-                        <div class="login-input">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <form class="flex flex-col gap-4 w-full max-w-sm mt-6" id="login-form" action="../php/auth.php" method="POST" name="login-form">
+                    <div class="flex flex-col gap-1">
+                        <label for="email" class="font-semibold text-gray-800">Email Address</label>
+                        <div class="login-input flex items-center border border-[#bba7a7] rounded-md px-2 shadow-inner transition-all duration-200 hover:border-blue-600">
+                            <i class="fas fa-envelope text-[#8c8aa0] pl-2.5"></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required
+                            class="flex-1 border-none outline-none py-4 px-2 text-base text-[#160b22] bg-transparent">
                         </div>
                     </div>
 
-                    <div class="login-group">
-                        <label for="password">Password</label>
-                        <div class="login-input">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="password" name="password" placeholder="Enter your password"
-                                required>
-                            <button type="button" class="toggle-password">
+                    <div class="flex flex-col gap-1">
+                        <label for="password" class="font-semibold text-gray-800">Password</label>
+                        <div class="login-input flex items-center border border-[#bba7a7] rounded-md px-2 shadow-inner transition-all duration-200 hover:border-blue-600">
+                            <i class="fas fa-lock text-[#8c8aa0] pl-2.5"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required
+                            class="flex-1 border-none outline-none py-4 px-2 text-base text-[#160b22] bg-transparent">
+                            <button type="button" class="toggle-password border-none bg-transparent cursor-pointer text-xl text-[#8c8aa0] transition-colors duration-200 px-2">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div class="login-option">
-                        <div class="remember-me">
-                            <input type="checkbox" id="remember-me" name="remember-me">
-                            <label for="remember-me">Remember Me</label>
+                    <div class="flex items-center flex-row mt-2 gap-12">
+                        <div class="flex justify-between items-center text-sm text-gray-600">
+                            <input type="checkbox" id="remember-me" name="remember-me" class="bg-transparent mr-1 w-4 h-4 cursor-pointer border border-gray-400">
+                            <label for="remember-me" class="text-base flex-wrap pl-1">Remember Me</label>
                         </div>
-                        <a href="#" class="forgot-password">Forgot Password?</a>
+                        <a href="#" class="forgot-password text-base font-bold text-brand-indigo no-underline transition-all duration-300 hover:text-brand-purple hover:translate-x-1">Forgot Password?</a>
                     </div>
 
-                    <button type="submit" class="btn btn-login" name="login" id="default-table-create-user">
-                        <i class="fas fa-sign-in-alt"></i>
+                    <button type="submit" class="btn-login bg-gradient-to-br from-amber-400 to-amber-500 text-gray-900 border-none mt-4 w-full p-4 text-lg font-semibold rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-400/40" name="login" id="default-table-create-user">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
                         Sign In
                     </button>
                 </form>
 
-                <div class="login-footer">
-                    <p>Don't have an account?
-                        <a href="../pages/signup.html">Sign Up
-                        </a>
+                <div class="flex items-center flex-col mt-4">
+                    <p class="text-sm text-black">Don't have an account?
+                        <a href="../pages/signup.html" class="text-brand-indigo font-bold no-underline cursor-pointer text-base ml-2 transition-colors duration-300 hover:text-brand-purple">Sign Up</a>
                     </p>
                 </div>
             </div>

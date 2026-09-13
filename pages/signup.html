@@ -4,108 +4,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/signup.css">
     <meta name="author" content="Gaurab Aryal">
     <title>SecureBank - Sign Up</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            indigo: '#667eea',
+                            purple: '#764ba2',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Segoe UI', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body>
+<body class="font-sans m-0 p-0 h-full">
 
-    <section class="signup-container" id="signup-container">
-        <div class="signup-grid">
-            <div class="signup-image">
-                <img src="../images/l.png" alt="Signup Image" class="image">
+    <section class="min-h-full flex justify-center items-center relative py-8" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" id="signup-container">
+        <div class="m-8 w-[85%] max-w-[1100px] bg-white p-8 rounded-xl shadow-2xl flex flex-row">
+            <!-- Image -->
+            <div class="w-[45%] flex justify-center flex-col items-center p-4 box-border">
+                <img src="../images/l.png" alt="Signup Image" class="w-full h-auto object-contain rounded-xl">
             </div>
-            <div class="signup-border">
-                <div class="signup-border-inner"></div>
+            <!-- Divider -->
+            <div class="flex justify-center items-center self-stretch w-1.5 p-4 ml-12">
+                <div class="w-[3px] h-full bg-gray-400 rounded-md"></div>
             </div>
-            <div class="signup-content">
-                <div class="signup-header">
-                    <div class="signup-brand">
-                        <i class="fas fa-university"></i>
-                        <h1> SecureBank</h1>
+            <!-- Content -->
+            <div class="w-[55%] flex flex-col justify-center items-center p-4">
+                <div class="text-center text-brand-indigo">
+                    <div class="flex flex-row font-bold text-2xl items-center justify-center">
+                        <i class="fas fa-university text-brand-indigo text-4xl"></i>
+                        <h1 class="ml-2 text-brand-indigo">SecureBank</h1>
                     </div>
-                    <h2>Create Account</h2>
-                    <p>Join us today and experience secure banking</p>
+                    <h2 class="m-0 text-3xl text-black mt-4">Create Account</h2>
+                    <p class="text-base text-gray-600 mt-2">Join us today and experience secure banking</p>
                 </div>
-                <form class="signup-form" id="signup-form" action="../php/auth.php" method="POST">
-                    <div class="signup-group">
-                        <label for="fullname">Full Name</label>
-                        <div class="signup-input">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="fullname" name="name" placeholder="Enter your full name" required>
+                <form class="flex flex-col gap-4 w-full max-w-[450px] mt-6" id="signup-form" action="../php/auth.php" method="POST">
+                    <div class="signup-group flex flex-col gap-1.5">
+                        <label for="fullname" class="font-semibold text-gray-800 text-sm">Full Name</label>
+                        <div class="signup-input flex items-center border border-[#bba7a7] rounded-md px-2 shadow-inner transition-all duration-200 hover:border-blue-600">
+                            <i class="fas fa-user text-[#8c8aa0] pl-2.5"></i>
+                            <input type="text" id="fullname" name="name" placeholder="Enter your full name" required
+                            class="flex-1 border-none outline-none py-3 px-2 text-sm text-[#160b22] bg-transparent">
                         </div>
                     </div>
 
-                    <div class="signup-group">
-                        <label for="email">Email Address</label>
-                        <div class="signup-input">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" name="sign-email" placeholder="Enter your email" required>
+                    <div class="signup-group flex flex-col gap-1.5">
+                        <label for="email" class="font-semibold text-gray-800 text-sm">Email Address</label>
+                        <div class="signup-input flex items-center border border-[#bba7a7] rounded-md px-2 shadow-inner transition-all duration-200 hover:border-blue-600">
+                            <i class="fas fa-envelope text-[#8c8aa0] pl-2.5"></i>
+                            <input type="email" id="email" name="sign-email" placeholder="Enter your email" required
+                            class="flex-1 border-none outline-none py-3 px-2 text-sm text-[#160b22] bg-transparent">
                         </div>
                     </div>
 
-                    <div class="signup-group">
-                        <label for="phone">Phone Number</label>
-                        <div class="signup-input">
-                            <i class="fas fa-phone"></i>
-                            <input type="tel" id="phone" name="number" placeholder="Enter your phone number" required>
+                    <div class="signup-group flex flex-col gap-1.5">
+                        <label for="phone" class="font-semibold text-gray-800 text-sm">Phone Number</label>
+                        <div class="signup-input flex items-center border border-[#bba7a7] rounded-md px-2 shadow-inner transition-all duration-200 hover:border-blue-600">
+                            <i class="fas fa-phone text-[#8c8aa0] pl-2.5"></i>
+                            <input type="tel" id="phone" name="number" placeholder="Enter your phone number" required
+                            class="flex-1 border-none outline-none py-3 px-2 text-sm text-[#160b22] bg-transparent">
                         </div>
                     </div>
 
-                    <div class="signup-group">
-                        <label for="password">Password</label>
-                        <div class="signup-input">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="password" name="login_password" placeholder="Create a password"
-                                required>
-                            <button type="button" class="toggle-password" data-target="password">
+                    <div class="signup-group flex flex-col gap-1.5">
+                        <label for="password" class="font-semibold text-gray-800 text-sm">Password</label>
+                        <div class="signup-input flex items-center border border-[#bba7a7] rounded-md px-2 shadow-inner transition-all duration-200 hover:border-blue-600">
+                            <i class="fas fa-lock text-[#8c8aa0] pl-2.5"></i>
+                            <input type="password" id="password" name="login_password" placeholder="Create a password" required
+                            class="flex-1 border-none outline-none py-3 px-2 text-sm text-[#160b22] bg-transparent">
+                            <button type="button" class="toggle-password border-none bg-transparent cursor-pointer text-xl text-[#8c8aa0] transition-colors duration-200 px-2" data-target="password">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div class="signup-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <div class="signup-input">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="confirm-password" name="con-pass"
-                                placeholder="Confirm your password" required>
-                            <button type="button" class="toggle-password" data-target="confirm-password">
+                    <div class="signup-group flex flex-col gap-1.5">
+                        <label for="confirm-password" class="font-semibold text-gray-800 text-sm">Confirm Password</label>
+                        <div class="signup-input flex items-center border border-[#bba7a7] rounded-md px-2 shadow-inner transition-all duration-200 hover:border-blue-600">
+                            <i class="fas fa-lock text-[#8c8aa0] pl-2.5"></i>
+                            <input type="password" id="confirm-password" name="con-pass" placeholder="Confirm your password" required
+                            class="flex-1 border-none outline-none py-3 px-2 text-sm text-[#160b22] bg-transparent">
+                            <button type="button" class="toggle-password border-none bg-transparent cursor-pointer text-xl text-[#8c8aa0] transition-colors duration-200 px-2" data-target="confirm-password">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div class="signup-option">
-                        <div class="terms-agree">
-                            <input type="checkbox" id="terms" name="terms" required>
-                            <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>
+                    <div class="flex items-center flex-row mt-2">
+                        <div class="terms-agree flex justify-start items-center text-sm text-gray-600">
+                            <input type="checkbox" id="terms" name="terms" required class="bg-transparent mr-1.5 w-4 h-4 cursor-pointer border border-gray-400">
+                            <label for="terms" class="text-xs flex-wrap pl-1 font-normal">I agree to the <a href="#" class="text-brand-indigo no-underline font-semibold transition-colors duration-300 hover:text-brand-purple hover:underline">Terms & Conditions</a></label>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-signup" name="signup">
-                        <i class="fas fa-user-plus"></i>
+                    <button type="submit" class="btn-signup bg-gradient-to-br from-amber-400 to-amber-500 text-gray-900 border-none mt-4 p-3 text-lg font-semibold rounded-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-400/40" name="signup">
+                        <i class="fas fa-user-plus mr-2"></i>
                         Sign Up
                     </button>
                 </form>
 
-                <div class="signup-footer">
-                    <p>Already have an account?
-                        <a href="../pages/login.html">Sign In
-                        </a>
+                <div class="flex items-center flex-col mt-4">
+                    <p class="text-sm text-black">Already have an account?
+                        <a href="../pages/login.html" class="text-brand-indigo font-bold no-underline cursor-pointer text-base ml-2 transition-colors duration-300 hover:text-brand-purple">Sign In</a>
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <script src="../js/signup.js">
-
-    </script>
+    <script src="../js/signup.js"></script>
 </body>
 
 </html>
